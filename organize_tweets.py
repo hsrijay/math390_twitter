@@ -1,25 +1,16 @@
 import json
 import re
 
-# figure out what tweets/replies we want to pull
-# do sentiment analysis on replies (idk when best time for this is)
-# group replies by tweet they are replying to
-# group tweets into categories
-# final result: overall sentiment for each category created
 
-# Things to do: grab tags (@) and hashtags in tweets and categorize based on them
-# figure out when to do the sentiment analysis
-# decide what output should look like
-
+# Adds Tweets from the given JSON to a dictionary mapping Tweet ID to text of Tweet
 def readTweetJSON(file, d):
     with open(file, "r") as read_file:
         tweets = json.load(read_file)
     for item in tweets["results"]:
         d[item["id"]] = item["text"]
-        # print (item["text"])
-        # print(item["reply_count"])
     return
 
+# Same purpose as above function, but code differed slightly for files of Tweet Replies
 def readReplyJSON(file, d):
     with open(file, "r") as read_file:
         tweets = json.load(read_file)
@@ -30,11 +21,16 @@ def readReplyJSON(file, d):
         d[id].append(item["text"])
     return
 
+# Due to Twitter only allowing us to grab 100 tweets at a time and using pagination to determine the
+# next group of tweets, I used this code to get the "next" token in the JSON file I just pulled,
+# and then added that "next" token to my next API call
 def next(file):
     with open(file, "r") as read_file:
         tweets = json.load(read_file)
     return tweets["next"]
 
+# Returned a tuple of the total amount of Replies the Tweets in a given file had,
+# and the total number of Tweets in the file
 def numReplies(file):
     num = 0
     count = 0
@@ -45,6 +41,9 @@ def numReplies(file):
         count += 1
     return num, count
 
+# Takes in dictionary of Tweet ID to Tweet text
+# Returns new dictionary of "categories" (hashtags or mentions) mapped to list of Tweet IDs that
+# contained that hashtag or mention
 def makeCategories(tweetDict):
     d = dict()
     for tweet in tweetDict:
@@ -57,6 +56,8 @@ def makeCategories(tweetDict):
                 d[userOrHashtag].append(tweet)
     return d
 
+# Modified given dictionary by combing two given categories into one new combined category
+# "newTitle" is the name given for the new combined category
 def combineCategories(catDict, cat1, cat2, newTitle):
     list1 = catDict[cat1]
     list2 = catDict[cat2]
@@ -71,6 +72,7 @@ def combineCategories(catDict, cat1, cat2, newTitle):
     del catDict[cat2]
     catDict[newTitle] = newList
 
+# Used to remove "@", "#", ".", emojis, and extra whitespace from Tweets
 def cleanUpText(txt):
     txt = re.sub(r'@', '', str(txt))
     txt = re.sub(r'#', '', str(txt))
@@ -88,18 +90,35 @@ def cleanUpText(txt):
     return txt
 
 if __name__ == "__main__":
+    # code to create single dictionary of Tweets for a given team
+
     # dict of tweet ID to tweet text
     tweetDict = dict()
-    folder = "warriors"
+    folder = "warriors"         # FILL IN
     team = "warriors"           # FILL IN
-    numFiles = 3       # FILL IN
+    numFiles = 3                # FILL IN
     for i in range(numFiles):
         file = folder + "/" + team + str(i) + ".json"
         readTweetJSON(file, tweetDict)
-        # print (numReplies(file))
+        print (numReplies(file))      #used to determine around how many replies to grab for each team
 
-    # print (tweetDict)
+    # need 3640 replies for 250 tweets for warriors
+    # need 1769 replies for 250 tweets for mavs
+    # need 3313 replies for 250 tweets for rockets
+
+    # Similarly, code to create single dictionary of Tweet replies for a given team
+
+    # dict of tweet ID to list of reply text
+    replyDict = dict()
+    numFiles = 0                # FILL IN
+    for i in range(numFiles):
+        file = folder + "/" + team + "_r" + str(i) + ".json"
+        readReplyJSON(file, replyDict)
+
+    # dict of a category (hashtag or mention) to list of Tweet IDs in that category
     categoriesDict = makeCategories(tweetDict)
+
+    # Below are the manual combinations I did to take related terms and condense them into a single category
 
     # Rockets Combinations
     # combineCategories(categoriesDict, "TissotStyleWatch", "TISSOT", "Tissot_Promotional")
@@ -143,24 +162,7 @@ if __name__ == "__main__":
     # combineCategories(categoriesDict, "CalWBBall:", "Other_SF_Sports", "Other_SF_Sports")
     # combineCategories(categoriesDict, "GoBears", "Other_SF_Sports", "Other_SF_Sports")
     # combineCategories(categoriesDict, "NBCSAuthentic", "957thegame", "Media_Partners")
-    # combineCategories(categoriesDict, "nbcsauthentic", "957thegame", "Media_Partners")
-
-    for cat in categoriesDict:
-        print(cat)
-        print (len(categoriesDict[cat]))
-
-    # dict of tweet ID to list of reply text
-    replyDict = dict()
-    numFiles = 0       # FILL IN
-    for i in range(numFiles):
-        file = folder + "/" + team + "_r" + str(i) + ".json"
-        readReplyJSON(file, replyDict)
-
-    print(replyDict)
-
-    # need 3640 replies for 250 tweets for warriors
-    # need 1769 replies for 250 tweets for mavs
-    # need 3313 replies for 250 tweets for rockets
+    # combineCategories(categoriesDict, "nbcsauthentic", "Media_Partners", "Media_Partners")
 
     # Code used to get next token for each json file
     # i = 33
