@@ -90,8 +90,8 @@ def cleanUpText(txt):
 if __name__ == "__main__":
     # dict of tweet ID to tweet text
     tweetDict = dict()
-    folder = "rockets"
-    team = "rockets"           # FILL IN
+    folder = "mavs"
+    team = "mavs"           # FILL IN
     numFiles = 3       # FILL IN
     for i in range(numFiles):
         file = folder + "/" + team + str(i) + ".json"
@@ -101,14 +101,30 @@ if __name__ == "__main__":
     # print (tweetDict)
     categoriesDict = makeCategories(tweetDict)
 
-    combineCategories(categoriesDict, "TissotStyleWatch", "TISSOT", "Tissot_Promotional")
-    combineCategories(categoriesDict, "DonJulio", "TitosVodka", "Alcohol_Promotional")
-    combineCategories(categoriesDict, "ChickfilA", "PizzaHut", "Food_Promotional")
-    combineCategories(categoriesDict, "Food_Promotional", "Alcohol_Promotional", "Promotional")
-    combineCategories(categoriesDict, "Tissot_Promotional", "Promotional", "Promotional")
+    # Rockets Combinations
+    # combineCategories(categoriesDict, "TissotStyleWatch", "TISSOT", "Tissot_Promotional")
+    # combineCategories(categoriesDict, "DonJulio", "TitosVodka", "Alcohol_Promotional")
+    # combineCategories(categoriesDict, "ChickfilA", "PizzaHut", "Food_Promotional")
+    # combineCategories(categoriesDict, "Food_Promotional", "Alcohol_Promotional", "Promotional")
+    # combineCategories(categoriesDict, "Tissot_Promotional", "Promotional", "Promotional")
+    #
+    # combineCategories(categoriesDict, "HoustonDynamo", "HoustonFCU", "Other_Houston_Sports")
+    # combineCategories(categoriesDict, "SportsTalk790", "ChronTXSN", "Media_Partners")
 
-    combineCategories(categoriesDict, "HoustonDynamo", "HoustonFCU", "Other_Houston_Sports")
-    combineCategories(categoriesDict, "SportsTalk790", "ChronTXSN", "Media_Partners")
+    # Mavs Combinations
+    # combineCategories(categoriesDict, "Chime", "ChoctawCasinos", "Promotional")
+    # combineCategories(categoriesDict, "Lexus", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "BEDGEAR:", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "SleepFuels", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "BEDGEAR", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "Biofreeze", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "modelousa", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "fcbrewing", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "SomosMavs:", "Promotional", "Promotional")
+    #
+    # combineCategories(categoriesDict, "DallasStars:", "GoStars", "Other_Dallas_Sports")
+    # combineCategories(categoriesDict, "FOXSportsSW", "1033fmESPN", "Media_Partners")
+    # combineCategories(categoriesDict, "FOXSportsSW!", "1033fmESPN", "Media_Partners")
 
     for cat in categoriesDict:
         print(cat)
