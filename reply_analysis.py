@@ -102,14 +102,17 @@ if __name__ == "__main__":
     categoriesDict = makeCategories(tweetDict)
 
     combineCategories(categoriesDict, "TissotStyleWatch", "TISSOT", "Tissot_Promotional")
-    combineCategories(categoriesDict, "SportsTalk790", "ChronTXSN", "Media_Partners")
     combineCategories(categoriesDict, "DonJulio", "TitosVodka", "Alcohol_Promotional")
     combineCategories(categoriesDict, "ChickfilA", "PizzaHut", "Food_Promotional")
+    combineCategories(categoriesDict, "Food_Promotional", "Alcohol_Promotional", "Promotional")
+    combineCategories(categoriesDict, "Tissot_Promotional", "Promotional", "Promotional")
+
     combineCategories(categoriesDict, "HoustonDynamo", "HoustonFCU", "Other_Houston_Sports")
-    
+    combineCategories(categoriesDict, "SportsTalk790", "ChronTXSN", "Media_Partners")
+
     for cat in categoriesDict:
         print(cat)
-        # print (len(categoriesDict[cat]))
+        print (len(categoriesDict[cat]))
 
     # dict of tweet ID to list of reply text
     replyDict = dict()
