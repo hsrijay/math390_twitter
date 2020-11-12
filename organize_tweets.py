@@ -31,6 +31,10 @@ def next(file):
 
 # Returned a tuple of the total amount of Replies the Tweets in a given file had,
 # and the total number of Tweets in the file
+# Used to determine roughly number of Replies to grab for each team, found the following:
+# need 3640 replies for 250 tweets for warriors
+# need 1769 replies for 250 tweets for mavs
+# need 3313 replies for 250 tweets for rockets
 def numReplies(file):
     num = 0
     count = 0
@@ -89,31 +93,33 @@ def cleanUpText(txt):
     txt = txt.strip()
     return txt
 
+# code to create single dictionary of Tweets for a given team
+def makeTweetDict(teamName, numFiles):
+    tweetDict = dict()
+    for i in range(numFiles):
+        file = teamName + "/" + teamName + str(i) + ".json"
+        readTweetJSON(file, tweetDict)
+    return tweetDict
+
+# Similarly, code to create single dictionary of Tweet replies for a given team
+def makeReplyDict(teamName, numFiles):
+    replyDict = dict()
+    for i in range(numFiles):
+        file = teamName + "/" + teamName + "_r" + str(i) + ".json"
+        readReplyJSON(file, tweetDict)
+    return replyDict
+
 if __name__ == "__main__":
-    # code to create single dictionary of Tweets for a given team
 
     # dict of tweet ID to tweet text
-    tweetDict = dict()
-    folder = "warriors"         # FILL IN
-    team = "warriors"           # FILL IN
-    numFiles = 3                # FILL IN
-    for i in range(numFiles):
-        file = folder + "/" + team + str(i) + ".json"
-        readTweetJSON(file, tweetDict)
-        print (numReplies(file))      #used to determine around how many replies to grab for each team
-
-    # need 3640 replies for 250 tweets for warriors
-    # need 1769 replies for 250 tweets for mavs
-    # need 3313 replies for 250 tweets for rockets
-
-    # Similarly, code to create single dictionary of Tweet replies for a given team
+    tweetDict = dict("warriors", 4)
+    # tweetDict = dict("rockets", 3)
+    # tweetDict = dict("mavs", 3)
 
     # dict of tweet ID to list of reply text
-    replyDict = dict()
-    numFiles = 0                # FILL IN
-    for i in range(numFiles):
-        file = folder + "/" + team + "_r" + str(i) + ".json"
-        readReplyJSON(file, replyDict)
+    replyDict = makeReplyDict("warriors", 38)
+    # replyDict = makeReplyDict("rockets", 34)
+    # replyDict = makeReplyDict("mavs", 18)
 
     # dict of a category (hashtag or mention) to list of Tweet IDs in that category
     categoriesDict = makeCategories(tweetDict)
