@@ -1,4 +1,5 @@
 import json
+import re
 
 # figure out what tweets/replies we want to pull
 # do sentiment analysis on replies (idk when best time for this is)
@@ -50,12 +51,41 @@ def makeCategories(tweetDict):
         text = tweetDict[tweet].split(" ")
         for word in text:
             if "@" in word or "#" in word:
-                userOrHashtag = word[1:]
+                userOrHashtag = cleanUpText(word)
                 if userOrHashtag not in d:
                     d[userOrHashtag] = []
                 d[userOrHashtag].append(tweet)
     return d
 
+def combineCategories(catDict, cat1, cat2, newTitle):
+    list1 = catDict[cat1]
+    list2 = catDict[cat2]
+    newList = []
+    for tweet in list1:
+        if tweet not in newList:
+            newList.append(tweet)
+    for tweet in list2:
+        if tweet not in newList:
+            newList.append(tweet)
+    del catDict[cat1]
+    del catDict[cat2]
+    catDict[newTitle] = newList
+
+def cleanUpText(txt):
+    txt = re.sub(r'@', '', str(txt))
+    txt = re.sub(r'#', '', str(txt))
+    txt = re.sub(r'\.', '', str(txt))
+    regrex_pattern = re.compile(pattern="["
+                                        u"\U0001F600-\U0001F64F"  # emoticons
+                                        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                                        u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                                        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                                        "]+", flags=re.UNICODE)
+    txt = regrex_pattern.sub(r'', txt)
+
+    # txt = txt.strip('\n')
+    txt = txt.strip()
+    return txt
 
 if __name__ == "__main__":
     # dict of tweet ID to tweet text
@@ -68,10 +98,19 @@ if __name__ == "__main__":
         readTweetJSON(file, tweetDict)
         # print (numReplies(file))
 
-    print (tweetDict)
+    # print (tweetDict)
     categoriesDict = makeCategories(tweetDict)
-    print (categoriesDict)
+
+    combineCategories(categoriesDict, "TissotStyleWatch", "TISSOT", "Tissot_Promotional")
+    combineCategories(categoriesDict, "SportsTalk790", "ChronTXSN", "Media_Partners")
+    combineCategories(categoriesDict, "DonJulio", "TitosVodka", "Alcohol_Promotional")
+    combineCategories(categoriesDict, "ChickfilA", "PizzaHut", "Food_Promotional")
+    combineCategories(categoriesDict, "HoustonDynamo", "HoustonFCU", "Other_Houston_Sports")
     
+    for cat in categoriesDict:
+        print(cat)
+        # print (len(categoriesDict[cat]))
+
     # dict of tweet ID to list of reply text
     replyDict = dict()
     numFiles = 0       # FILL IN
