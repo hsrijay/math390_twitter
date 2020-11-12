@@ -90,8 +90,8 @@ def cleanUpText(txt):
 if __name__ == "__main__":
     # dict of tweet ID to tweet text
     tweetDict = dict()
-    folder = "mavs"
-    team = "mavs"           # FILL IN
+    folder = "warriors"
+    team = "warriors"           # FILL IN
     numFiles = 3       # FILL IN
     for i in range(numFiles):
         file = folder + "/" + team + str(i) + ".json"
@@ -124,7 +124,26 @@ if __name__ == "__main__":
     #
     # combineCategories(categoriesDict, "DallasStars:", "GoStars", "Other_Dallas_Sports")
     # combineCategories(categoriesDict, "FOXSportsSW", "1033fmESPN", "Media_Partners")
-    # combineCategories(categoriesDict, "FOXSportsSW!", "1033fmESPN", "Media_Partners")
+
+    # Warriors Combinations
+    # combineCategories(categoriesDict, "CarMax", "googlecloud", "Promotional")
+    # combineCategories(categoriesDict, "Verizon", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "StateFarm:", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "Kia", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "budweiserusa", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "PlayStation", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "verizon", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "Rakuten", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "Xfinity:", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "Viber", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "Rakuten", "Promotional", "Promotional")
+    # combineCategories(categoriesDict, "Xfinity:", "Promotional", "Promotional")
+    #
+    # combineCategories(categoriesDict, "StanfordWBB:", "StanfordWBB", "Other_SF_Sports")
+    # combineCategories(categoriesDict, "CalWBBall:", "Other_SF_Sports", "Other_SF_Sports")
+    # combineCategories(categoriesDict, "GoBears", "Other_SF_Sports", "Other_SF_Sports")
+    # combineCategories(categoriesDict, "NBCSAuthentic", "957thegame", "Media_Partners")
+    # combineCategories(categoriesDict, "nbcsauthentic", "957thegame", "Media_Partners")
 
     for cat in categoriesDict:
         print(cat)
