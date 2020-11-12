@@ -18,17 +18,20 @@ def getTextPolarity(txt):
 if __name__ == "__main__":
 
     # dict of tweet ID to tweet text
-    tweetDict = dict("warriors", 4)
+    # tweetDict = dict("warriors", 4)
     # tweetDict = dict("rockets", 3)
-    # tweetDict = dict("mavs", 3)
+    tweetDict = dict("mavs", 3)
 
     # dict of tweet ID to list of reply text
-    replyDict = makeReplyDict("warriors", 38)
+    # replyDict = makeReplyDict("warriors", 38)
     # replyDict = makeReplyDict("rockets", 34)
-    # replyDict = makeReplyDict("mavs", 18)
+    replyDict = makeReplyDict("mavs", 18)
 
     # dict of a category (hashtag or mention) to list of Tweet IDs in that category
     categoriesDict = makeCategories(tweetDict)
+
+    # NOTE: The combinations in organize_tweets.py would be done here, however, for readability,
+    # we have not included them here
 
     #remove mismatches in replyDict and keyDict
     for key in list(replyDict.keys()):
