@@ -44,31 +44,49 @@ def numReplies(file):
         count += 1
     return num, count
 
+def makeCategories(tweetDict):
+    d = dict()
+    for tweet in tweetDict:
+        text = tweetDict[tweet].split(" ")
+        for word in text:
+            if "@" in word or "#" in word:
+                userOrHashtag = word[1:]
+                if userOrHashtag not in d:
+                    d[userOrHashtag] = []
+                d[userOrHashtag].append(tweet)
+    return d
+
+
 if __name__ == "__main__":
     # dict of tweet ID to tweet text
     tweetDict = dict()
     folder = "rockets"
     team = "rockets"           # FILL IN
-    numFiles = 0       # FILL IN
+    numFiles = 3       # FILL IN
     for i in range(numFiles):
         file = folder + "/" + team + str(i) + ".json"
-        # readTweetJSON(file, tweetDict)
-        print (numReplies(file))
+        readTweetJSON(file, tweetDict)
+        # print (numReplies(file))
 
     print (tweetDict)
-
+    categoriesDict = makeCategories(tweetDict)
+    print (categoriesDict)
+    
     # dict of tweet ID to list of reply text
     replyDict = dict()
-    numFiles = 0        # FILL IN
+    numFiles = 0       # FILL IN
     for i in range(numFiles):
         file = folder + "/" + team + "_r" + str(i) + ".json"
-        # readReplyJSON(file, replyDict)
+        readReplyJSON(file, replyDict)
 
     print(replyDict)
+
     # need 3640 replies for 250 tweets for warriors
     # need 1769 replies for 250 tweets for mavs
     # need 3313 replies for 250 tweets for rockets
-    i = 33
+
+    # Code used to get next token for each json file
+    # i = 33
     # file = folder + "/" + team + str(i) + ".json"
-    file = folder + "/" + team + "_r" + str(i) + ".json"
-    print (next(file))
+    # file = folder + "/" + team + "_r" + str(i) + ".json"
+    # print (next(file))
