@@ -47,9 +47,9 @@ def numReplies(file):
 if __name__ == "__main__":
     # dict of tweet ID to tweet text
     tweetDict = dict()
-    folder = "warriors"
-    team = "warriors"           # FILL IN
-    numFiles = 4        # FILL IN
+    folder = "mavs"
+    team = "mavs"           # FILL IN
+    numFiles = 0       # FILL IN
     for i in range(numFiles):
         file = folder + "/" + team + str(i) + ".json"
         # readTweetJSON(file, tweetDict)
@@ -59,13 +59,15 @@ if __name__ == "__main__":
 
     # dict of tweet ID to list of reply text
     replyDict = dict()
-    numFiles = 2        # FILL IN
+    numFiles = 0        # FILL IN
     for i in range(numFiles):
         file = folder + "/" + team + "_r" + str(i) + ".json"
         # readReplyJSON(file, replyDict)
 
     print(replyDict)
-    # need 3640 replies for 250 tweets
-    i = 37
+    # need 3640 replies for 250 tweets for warriors
+    # need 1769 replies for 250 tweets for mavs
+    i = 16
+    # file = folder + "/" + team + str(i) + ".json"
     file = folder + "/" + team + "_r" + str(i) + ".json"
     print (next(file))
